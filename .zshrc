@@ -179,8 +179,8 @@ if type brew &>/dev/null; then
         alias brew='env PATH="${PATH//$(pyenv root)\/shims:/}" brew'
     fi
     # Assumes you bzip2, zlib, and openblas installed, all required by Python
-    export LDFLAGS="-L/usr/local/opt/bzip2/lib -L/usr/local/opt/zlib/lib L/usr/local/opt/openblas/lib"
-    export CPPFLAGS="-I/usr/local/opt/bzip2/include -I/usr/local/opt/zlib/include -I/usr/local/opt/openblas/include"
+    export LDFLAGS="-L/usr/local/opt/bzip2/lib -L/usr/local/opt/zlib/lib -L/usr/local/opt/openblas/lib -L/usr/local/opt/llvm/lib"
+    export CPPFLAGS="-I/usr/local/opt/bzip2/include -I/usr/local/opt/zlib/include -I/usr/local/opt/openblas/include -I/usr/local/opt/llvm/include"
     export PKG_CONFIG_PATH="/usr/local/opt/openblas/lib/pkgconfig"
     OPENBLAS="$(brew --prefix openblas)"
 fi
