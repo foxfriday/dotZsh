@@ -61,88 +61,9 @@ else
 }
 zle -N zle-keymap-select
 ## --------------------------------------------------------------
-## Aliases
+## Function and Aliases
 ## --------------------------------------------------------------
-alias cp='cp -i'      # Confirm before overwriting something
-alias mv='mv -i'      # Confirm bevore overwriting something
-alias df='df -h'      # Human-readable sizes
-alias du='du -h'      # Human-readable sizes
-alias free='free -m'  # Show sizes in MB
-alias dict='sdcv'     # Look up words
-## --------------------------------------------------------------
-## Functions
-## --------------------------------------------------------------
-# Extract
-ex () {
-  if [ -f $1 ] ; then
-    case $1 in
-      *.tar.bz2)   tar xjf $1   ;;
-      *.tar.gz)    tar xzf $1   ;;
-      *.bz2)       bunzip2 $1   ;;
-      *.rar)       unrar x $1   ;;
-      *.tar)       tar xf $1    ;;
-      *.tbz2)      tar xjf $1   ;;
-      *.tgz)       tar xzf $1   ;;
-      *.zip)       unzip $1     ;;
-      *.Z)         uncompress $1;;
-      *)           echo "'$1' cannot be extracted via ex()" ;;
-    esac
-  else
-    echo "'$1' is not a valid file"
-  fi
-}
-# Shred entire directory
-shreddir() {
-        find $1 -type f -exec shred {} \;
-        rm -r $1
-}
-# Find the directory that contains a file
-findfile () {
-        find $1 -name $2 | xargs -n1 dirname
-}
-## --------------------------------------------------------------
-## System Dependent Aliases and Functions
-## --------------------------------------------------------------
-case "$OSTYPE" in
-    linux*)
-        # modify LS_COLORS if you want different colors with ls
-        alias ls="ls --color"
-        ;;
-    darwin*)
-        # modify LSCOLOR if you want different colors with ls
-        alias ls="ls -GO"
-        # quick update
-        alias update="sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup;"
-        # empty trashes, logs, and download history
-        cleanup () {
-            sudo rm -rfv /Volumes/*/.Trashes
-            sudo rm -rfv ~/.Trash
-            sudo rm -rfv /private/var/log/asl/*.asl
-            sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'
-        }
-        # umount doesn't work on darwin, not to mention the os pukes on drives
-        clean_unmount () {
-            if mount | grep $1 > /dev/null; then
-                if [ -d "$1/.fseventsd" ]; then
-                    rm -r "$1/.fseventsd"
-                fi
-                if [ -d "$1/.Trashes" ]; then
-                    rm -r "$1/.Trashes"
-                fi
-                if [ -d "$1/.DS_Store" ]; then
-                    rm -r "$1/.DS_Store"
-                fi
-                if [ -d "$1/.Spotlight-V100" ]; then
-                    rm -r "$1/.Spotlight-V100"
-                fi
-                diskutil umount $1
-            else
-                echo "Not a mount"
-            fi
-        }
-        alias umount="clean_unmount"
-        ;;
-esac
+source $ZDOTDIR/functions.sh
 ## --------------------------------------------------------------
 ## Prompt
 ## --------------------------------------------------------------
@@ -184,6 +105,11 @@ if type brew &>/dev/null; then
     export PKG_CONFIG_PATH="/usr/local/opt/openblas/lib/pkgconfig"
     OPENBLAS="$(brew --prefix openblas)"
 fi
+## --------------------------------------------------------------
+## fzf
+## --------------------------------------------------------------
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
 ## --------------------------------------------------------------
 ## Autocompletion
 ## --------------------------------------------------------------
@@ -237,24 +163,3 @@ toggletheme ()
 }
 export SHELL_DAY_THEME=true
 source $ZDOTDIR/day-night-theme.sh
-## --------------------------------------------------------------
-## Emacs' Vterm
-## --------------------------------------------------------------
-vterm_printf(){
-    if [ -n "$TMUX" ]; then
-        # Tell tmux to pass the escape sequences through
-        # (Source: http://permalink.gmane.org/gmane.comp.terminal-emulators.tmux.user/1324)
-        printf "\ePtmux;\e\e]%s\007\e\\" "$1"
-    elif [ "${TERM%%-*}" = "screen" ]; then
-        # GNU screen (screen, screen-256color, screen-256color-bce)
-        printf "\eP\e]%s\007\e\\" "$1"
-    else
-        printf "\e]%s\e\\" "$1"
-    fi
-}
-if [[ "$INSIDE_EMACS" = 'vterm' ]]; then
-    alias clear='vterm_printf "51;Evterm-clear-scrollback";tput clear'
-fi
-vterm_prompt_end() {
-    vterm_printf "51;A$(whoami)@$(hostname):$(pwd)";
-}
