@@ -18,7 +18,8 @@ setopt nobeep              # No beep
 ## --------------------------------------------------------------
 ## Start agent manually so that we can use the agent to manage SSH keys. See:
 ## https://www.gnupg.org/documentation/manuals/gnupg/Invoking-GPG_002dAGENT.html
-export GPG_TTY=$(tty)
+GPG_TTY=$(tty)
+export GPG_TTY
 gpg-connect-agent /bye
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 ## --------------------------------------------------------------
