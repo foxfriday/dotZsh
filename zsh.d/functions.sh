@@ -113,8 +113,9 @@ frga () {
             --bind="enter:execute(open {})+abort"
 }
 
-# Git
-#----------------------------------------
+## --------------------------------------------------------------
+## Git
+## --------------------------------------------------------------
 fgit () {
     _gitLogLineToHash="echo {} | grep -o '[a-f0-9]\{7\}' | head -1"
     _viewGitShow="xargs -I % sh -c 'git show --color=always % |
@@ -147,4 +148,23 @@ fadd() {
             --preview="git --no-pager diff --color=always {} | diff-so-fancy" \
             --bind="enter:execute:(git diff {})" \
             --bind "ctrl-c:execute-silent:(git add {})"
+}
+
+## --------------------------------------------------------------
+## Todoman
+## --------------------------------------------------------------
+ftodo() {
+    _todoId="echo {} | grep -o '^[0-9]\+'"
+    todo list "$@" |
+        fzf -i -e +s \
+            --reverse \
+            --no-multi \
+            --ansi \
+            --phony \
+            --preview="$_todoId | xargs todo show " \
+            --header "C-a: cancel, C-d: done, enter: copy id" \
+            --bind="change:reload:([[ ! -z {} ]] && todo list --grep {q})" \
+            --bind="ctrl-a:execute($_todoId | xargs todo cancel)+abort" \
+            --bind="ctrl-d:execute($_todoId | xargs todo done)+abort" \
+            --bind="enter:execute($_todoId | pbcopy)+abort"
 }
