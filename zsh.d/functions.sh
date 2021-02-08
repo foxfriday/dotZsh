@@ -98,7 +98,7 @@ fpass () {
         xargs pass -c
 }
 
-# Search documents with preview
+# Search pdf, etc documents with preview
 frga () {
     rga --files-with-matches "." |
         fzf -i -e +s \
@@ -113,6 +113,20 @@ frga () {
             --bind="enter:execute(open {})+abort"
 }
 
+# Search text documents with preview, respecting .gitignore
+frg () {
+    rg --files-with-matches "." |
+        fzf -i -e +s \
+            --reverse \
+            --ansi \
+            --phony \
+            --preview="rg --pretty --context 4 {q} {}" \
+            --preview-window="75%:wrap" \
+            --header "enter: view, C-c: copy" \
+            --bind="change:reload:([[ ! -z {} ]] && rg --files-with-matches {q})" \
+            --bind="ctrl-c:execute-silent:(echo {} | pbcopy)" \
+            --bind="enter:execute(open {})+abort"
+}
 ## --------------------------------------------------------------
 ## Git
 ## --------------------------------------------------------------
