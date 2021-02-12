@@ -84,19 +84,25 @@ esac
 ## --------------------------------------------------------------
 ## FZF
 ## --------------------------------------------------------------
-
 # Passwords
 fpass () {
-    find ~/.password-store -type f -name \*.gpg \
-         -exec realpath --relative-to ~/.password-store {} \; |
-        fzf -i +s \
-            --reverse \
-            --height 20% \
-            --ansi \
-            --no-multi |
-        cut -d. -f1 |
-        xargs pass -c
+    [[ -z "${PASSWORD_STORE_DIR}" ]] && pdir=~/.password-store || pdir="${PASSWORD_STORE_DIR}"
+    name=$(find "$pdir" -type f -iname \*.gpg \
+                -exec realpath --relative-to "$pdir" {} \; |
+               fzf -i -e +s \
+                   --reverse \
+                   --ansi \
+                   --no-multi \
+                   --height 20%)
+    name=${name%.gpg}
+    if [ ! -z "$name" -a "$name" != " " ]; then
+        pass "$@" "$name"
+    fi
 }
+
+# Notes
+alias pnotes='PASSWORD_STORE_DIR=~/.password-notes pass'
+alias fnotes='PASSWORD_STORE_DIR=~/.password-notes fpass'
 
 # Search pdf, etc documents with preview
 frga () {
@@ -108,25 +114,11 @@ frga () {
             --preview="rga --pretty --context 4 {q} {}" \
             --preview-window="75%:wrap" \
             --header "enter: view, C-c: copy" \
-            --bind="change:reload:([[ ! -z {} ]] && rga --files-with-matches {q})" \
-            --bind="ctrl-c:execute-silent:(echo {} | pbcopy)" \
-            --bind="enter:execute(open {})+abort"
+            --bind="change:reload([[ ! -z {} ]] && rga --files-with-matches {q})" \
+            --bind="ctrl-c:execute-silent(echo {} | pbcopy)+accept" \
+            --bind="enter:execute(open {})+accept"
 }
 
-# Search text documents with preview, respecting .gitignore
-frg () {
-    rg --files-with-matches "." |
-        fzf -i -e +s \
-            --reverse \
-            --ansi \
-            --phony \
-            --preview="rg --pretty --context 4 {q} {}" \
-            --preview-window="75%:wrap" \
-            --header "enter: view, C-c: copy" \
-            --bind="change:reload:([[ ! -z {} ]] && rg --files-with-matches {q})" \
-            --bind="ctrl-c:execute-silent:(echo {} | pbcopy)" \
-            --bind="enter:execute(open {})+abort"
-}
 ## --------------------------------------------------------------
 ## Git
 ## --------------------------------------------------------------
@@ -160,8 +152,8 @@ fadd() {
             --ansi \
             --header "enter: view, C-c: add" \
             --preview="git --no-pager diff --color=always {} | diff-so-fancy" \
-            --bind="enter:execute:(git diff {})" \
-            --bind "ctrl-c:execute-silent:(git add {})"
+            --bind="enter:execute(git diff {})" \
+            --bind "ctrl-c:execute-silent(git add {})"
 }
 
 ## --------------------------------------------------------------
@@ -178,7 +170,7 @@ ftodo() {
             --preview="$_todoId | xargs todo show " \
             --header "C-a: cancel, C-d: done, enter: copy id" \
             --bind="change:reload:([[ ! -z {} ]] && todo list --grep {q})" \
-            --bind="ctrl-a:execute($_todoId | xargs todo cancel)+abort" \
-            --bind="ctrl-d:execute($_todoId | xargs todo done)+abort" \
-            --bind="enter:execute($_todoId | pbcopy)+abort"
+            --bind="ctrl-a:execute($_todoId | xargs todo cancel)+accept" \
+            --bind="ctrl-d:execute($_todoId | xargs todo done)+accept" \
+            --bind="enter:execute($_todoId | pbcopy)+accept"
 }
