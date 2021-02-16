@@ -105,7 +105,8 @@ fi
 ## --------------------------------------------------------------
 ## fzf
 ## --------------------------------------------------------------
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+source $FZFPATH/completion.zsh
+source $FZFPATH/key-bindings.zsh
 ## --------------------------------------------------------------
 ## Personal Functions and Aliases
 ## --------------------------------------------------------------
@@ -135,20 +136,20 @@ compinit
 ## --------------------------------------------------------------
 ## Auto suggestions
 ## --------------------------------------------------------------
-source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source $PLUGINS/zsh-autosuggestions/zsh-autosuggestions.zsh
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
 ## --------------------------------------------------------------
 ## Search History
 ## --------------------------------------------------------------
-source /usr/local/share/zsh-history-substring-search/zsh-history-substring-search.zsh
+source $PLUGINS/zsh-history-substring-search/zsh-history-substring-search.zsh
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
 ## --------------------------------------------------------------
 ## Syntax Highlight
 ## --------------------------------------------------------------
-source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-export ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR=/usr/local/share/zsh-syntax-highlighting/highlighters
+export ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR=$PLUGINS/zsh-syntax-highlighting/highlighters
+source $PLUGINS/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 ## --------------------------------------------------------------
 ## Theme
 ## --------------------------------------------------------------
