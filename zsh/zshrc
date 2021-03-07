@@ -140,6 +140,9 @@ compinit
 ## --------------------------------------------------------------
 ## Plugins
 ## --------------------------------------------------------------
+## Forgit (fzf + git)
+## --------------------------------------------------------------
+source $ZDOTDIR/plugs/forgit.plugin.zsh
 ## Auto suggestions
 ## --------------------------------------------------------------
 source $PLUGINS/zsh-autosuggestions/zsh-autosuggestions.zsh

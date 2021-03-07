@@ -124,43 +124,6 @@ fpdf () {
 }
 
 ## --------------------------------------------------------------
-## Git
-## --------------------------------------------------------------
-fgit () {
-    _gitLogLineToHash="echo {} | grep -o '[a-f0-9]\{7\}' | head -1"
-    _viewGitShow="xargs -I % sh -c 'git show --color=always % |
-                  diff-so-fancy'"
-    _viewGitLogLine="$_gitLogLineToHash | $_viewGitShow"
-    _viewGitLogLineUnfancy="$_gitLogLineToHash | xargs -I % sh -c 'git show %'"
-    git hist "$@" |
-        fzf -i -e +s \
-            --reverse \
-            --tiebreak=index \
-            --no-multi \
-            --ansi \
-            --preview="echo {} |
-                       grep -o '[a-f0-9]\{7\}' |
-                       head -1 |
-                       $_viewGitShow" \
-             --header="enter: view, C-c: copy hash" \
-             --bind="enter:execute:$_viewGitLogLine | less -R" \
-             --bind="ctrl-c:execute-silent:$_gitLogLineToHash |
-                     pbcopy"
-}
-
-fadd() {
-    git ls-files -m -o --exclude-standard "$@" |
-        fzf -i -e +s \
-            --reverse \
-            --no-multi \
-            --ansi \
-            --header "enter: view, C-c: add" \
-            --preview="git --no-pager diff --color=always {} | diff-so-fancy" \
-            --bind="enter:execute(git diff {})" \
-            --bind "ctrl-c:execute-silent(git add {})"
-}
-
-## --------------------------------------------------------------
 ## Todoman
 ## --------------------------------------------------------------
 ftodo() {
