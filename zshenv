@@ -1,4 +1,4 @@
-ZDOTDIR=$HOME/.zsh.d
+ZDOTDIR=$HOME/.config/zsh
 
 case "$OSTYPE" in
     linux*)

@@ -63,6 +63,7 @@ else
       echo -ne '\e[6 q'
     fi
 }
+
 zle -N zle-keymap-select
 ## --------------------------------------------------------------
 ## Prompt
@@ -158,14 +159,14 @@ source $PLUGINS/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 ## --------------------------------------------------------------
 ## Theme
 ## --------------------------------------------------------------
-toggletheme ()
-{
-    if [ "$SHELL_DAY_THEME" != true ]; then
-        export SHELL_DAY_THEME=true
-    else
-        export SHELL_DAY_THEME=false
-    fi
-    source $ZDOTDIR/day-night-theme.sh
-}
-export SHELL_DAY_THEME=true
-source $ZDOTDIR/day-night-theme.sh
+# toggletheme ()
+# {
+#     if [ "$SHELL_DAY_THEME" != true ]; then
+#         export SHELL_DAY_THEME=true
+#     else
+#         export SHELL_DAY_THEME=false
+#     fi
+#     source $ZDOTDIR/day-night-theme.sh
+# }
+# export SHELL_DAY_THEME=true
+# source $ZDOTDIR/day-night-theme.sh

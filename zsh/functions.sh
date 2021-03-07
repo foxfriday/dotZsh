@@ -7,6 +7,7 @@ alias df='df -h'      # Human-readable sizes
 alias du='du -h'      # Human-readable sizes
 alias free='free -m'  # Show sizes in MB
 alias dict='sdcv'     # Look up words
+alias pvpn='sudo ~/.pyenv/versions/3.9.1/bin/protonvpn'
 
 ## --------------------------------------------------------------
 ## Functions
@@ -46,7 +47,6 @@ case "$OSTYPE" in
         alias pbpaste='xclip -selection clipboard -o'
         # modify LS_COLORS if you want different colors with ls
         alias ls="ls --color"
-        alias tlmgr="/usr/share/texmf-dist/scripts/texlive/tlmgr.pl --usermode"
         ;;
     darwin*)
         alias xdg-open="open -a"

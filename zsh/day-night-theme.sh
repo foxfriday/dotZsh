@@ -5,9 +5,9 @@
 
 if [ "$SHELL_DAY_THEME" != true ]; then
     # Night
-    black0="1d/1f/21"
-    red0="cc/00/00"
-    green0="00/66/00"
+    black0="00/00/00"
+    red0="d6/32/32"
+    green0="46/90/46"
     yellow0="f0/c6/74"
     blue0="81/a2/be"
     magenta0="b2/94/bb"
@@ -16,12 +16,12 @@ if [ "$SHELL_DAY_THEME" != true ]; then
     grey0="96/98/96"
     # Lighter shades
     red1="e5/00/00"
-    green1="00/80/00"
+    green1="80/00/00"
     yellow1=$yellow0
     blue1="00/00/ff"
     magenta1=$magenta0
     cyan1=$cyan0
-    # Extre colors
+    # Extra colors
     color15="ff/ff/ff"
     color16="de/93/5f"
     color17="a3/68/5a"
@@ -33,15 +33,15 @@ if [ "$SHELL_DAY_THEME" != true ]; then
     color_background=$black0
 else
     # Day
-    black0="ff/ff/ff"
+    black0="4d/4d/4c"
     red0="7f/00/00"
     green0="00/40/00"
     yellow0="ea/b7/00"
     blue0="42/71/ae"
     magenta0="89/59/a8"
     cyan0="3e/99/9f"
-    white0="4d/4d/4c"
-    grey0="8e/90/8c"
+    white0="ff/ff/ff"
+    grey0="31/31/31"
     # Lighter shades
     red1="99/00/00"
     green1="00/59/00"
@@ -57,8 +57,8 @@ else
     color19="d6/d6/d6"
     color20="96/98/96"
     color21="28/2a/2e"
-    color_foreground=$white0
-    color_background=$black0
+    color_foreground=$black0
+    color_background=$white0
 fi
 
 if [ -n "$TMUX" ]; then
