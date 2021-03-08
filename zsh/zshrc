@@ -71,6 +71,13 @@ zle -N zle-keymap-select
 NEWLINE=$'\n'
 PROMPT="%F{green}%~%f${NEWLINE}%(?.%F{blue}>%f.%F{red}>%f)"
 ## --------------------------------------------------------------
+## Bat
+## --------------------------------------------------------------
+if command -v bat 1>/dev/null 2>&1; then
+    export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+    alias fzfp="fzf --preview 'bat --color=always --style=numbers --line-range=:500 {}'"
+fi
+## --------------------------------------------------------------
 ## Pyenv
 ## --------------------------------------------------------------
 if command -v pyenv 1>/dev/null 2>&1; then
