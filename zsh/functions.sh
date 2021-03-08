@@ -8,6 +8,9 @@ alias du='du -h'      # Human-readable sizes
 alias free='free -m'  # Show sizes in MB
 alias dict='sdcv'     # Look up words
 alias pvpn='sudo ~/.pyenv/versions/3.9.1/bin/protonvpn'
+# Passwords
+alias pnotes='PASSWORD_STORE_DIR=~/Dropbox/notes/pnotes pass'
+alias fnotes='PASSWORD_STORE_DIR=~/Dropbox/notes/pnotes fpass'
 
 ## --------------------------------------------------------------
 ## Functions
@@ -85,26 +88,3 @@ case "$OSTYPE" in
         alias umount="clean_unmount"
         ;;
 esac
-
-## --------------------------------------------------------------
-## FZF
-## --------------------------------------------------------------
-# Passwords
-fpass () {
-    [[ -z "${PASSWORD_STORE_DIR}" ]] && pdir=~/.password-store || pdir="${PASSWORD_STORE_DIR}"
-    name=$(find "$pdir" -type f -iname \*.gpg \
-                -exec realpath --relative-to "$pdir" {} \; |
-               fzf -i -e +s \
-                   --reverse \
-                   --ansi \
-                   --no-multi \
-                   --height 20%)
-    name=${name%.gpg}
-    if [ ! -z "$name" -a "$name" != " " ]; then
-        pass "$@" "$name"
-    fi
-}
-
-# Notes
-alias pnotes='PASSWORD_STORE_DIR=~/Dropbox/notes/pnotes pass'
-alias fnotes='PASSWORD_STORE_DIR=~/Dropbox/notes/pnotes fpass'
