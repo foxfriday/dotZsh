@@ -43,6 +43,7 @@ shreddir() {
 ## --------------------------------------------------------------
 case "$OSTYPE" in
     linux*)
+        alias open='xdg-open'
         alias pbcopy='xclip -selection clipboard'
         alias pbpaste='xclip -selection clipboard -o'
         # modify LS_COLORS if you want different colors with ls
@@ -107,37 +108,3 @@ fpass () {
 # Notes
 alias pnotes='PASSWORD_STORE_DIR=~/Dropbox/notes/pnotes pass'
 alias fnotes='PASSWORD_STORE_DIR=~/Dropbox/notes/pnotes fpass'
-
-# Search pdf, etc documents with preview
-fpdf () {
-    pdfgrep -i -r --files-with-match --include "*.pdf" "" |
-        fzf -i -e +s \
-            --reverse \
-            --ansi \
-            --phony \
-            --preview="pdfgrep -i -n -C 2 --color=always {q} {}" \
-            --preview-window="75%:wrap" \
-            --header "enter: view, C-c: copy" \
-            --bind="change:reload([[ ! -z {} ]] && pdfgrep -i -r --cache --files-with-match {q} *.pdf)" \
-            --bind="ctrl-c:execute-silent(echo {} | pbcopy)+accept" \
-            --bind="enter:execute([[ ! -z {} ]] && xdg-open {})+accept"
-}
-
-## --------------------------------------------------------------
-## Todoman
-## --------------------------------------------------------------
-ftodo() {
-    _todoId="echo {} | grep -o '^[0-9]\+'"
-    todo list "$@" |
-        fzf -i -e +s \
-            --reverse \
-            --no-multi \
-            --ansi \
-            --phony \
-            --preview="$_todoId | xargs todo show " \
-            --header "C-a: cancel, C-d: done, enter: copy id" \
-            --bind="change:reload:([[ ! -z {} ]] && todo list --grep {q})" \
-            --bind="ctrl-a:execute($_todoId | xargs todo cancel)+accept" \
-            --bind="ctrl-d:execute($_todoId | xargs todo done)+accept" \
-            --bind="enter:execute($_todoId | pbcopy)+accept"
-}
