@@ -8,5 +8,5 @@ all:
 	ln -sf $(SELF_DIR)zshenv $(HOME)/.zshenv
 	ln -sf $(SELF_DIR)zsh/zshrc $(CONF_DIR).zshrc
 	ln -sf $(SELF_DIR)zsh/dircolors $(CONF_DIR)dircolors
-	ln -sf $(SELF_DIR)zsh/functions.sh $(CONF_DIR)functions.sh
+	ln -sf $(SELF_DIR)zsh/alias.sh $(CONF_DIR)alias.sh
 	ln -sf $(SELF_DIR)forgit/forgit.plugin.zsh $(CONF_PLG)forgit.plugin.zsh
