@@ -21,6 +21,8 @@ case "$OSTYPE" in
         alias pbcopy='xclip -selection clipboard'
         alias pbpaste='xclip -selection clipboard -o'
         # modify LS_COLORS if you want different colors with ls
+	## You can get the base file with dircolors --print-database > dircolors
+	eval $(dircolors --b $ZDOTDIR/dircolors)
         alias ls="ls --color"
         ;;
     darwin*)

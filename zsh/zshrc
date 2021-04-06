@@ -13,9 +13,6 @@ setopt extendedglob        # Globbing. Allows using regular expressions with *
 setopt nocaseglob          # Case insensitive globbing
 setopt rcexpandparam       # Array expension with parameters
 setopt nobeep              # No beep
-## Colors for ls
-## You can get the base file with dircolors --print-database > dircolors
-eval $(dircolors --b $ZDOTDIR/dircolors)
 ## --------------------------------------------------------------
 ## Gpg
 ## --------------------------------------------------------------
