@@ -77,9 +77,9 @@ fi
 ## --------------------------------------------------------------
 ## Pyenv
 ## --------------------------------------------------------------
+export PYENV_ROOT=$HOME/.pyenv
+export PATH=$PYENV_ROOT/bin:$PATH
 if command -v pyenv 1>/dev/null 2>&1; then
-    export PYENV_ROOT=$HOME/.pyenv
-    export PATH=$PYENV_ROOT/bin:$PATH
     # disable prompt mangling when activating an environment
     export VIRTUAL_ENV_DISABLE_PROMPT=1
     eval "$(pyenv init -)"
@@ -156,6 +156,7 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
 ## Search History
 ## --------------------------------------------------------------
 source $PLUGINS/zsh-history-substring-search/zsh-history-substring-search.zsh
+# Ubuntu may be '\eOA' and '\eOB'
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
 ## --------------------------------------------------------------
