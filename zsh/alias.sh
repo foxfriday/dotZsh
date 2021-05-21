@@ -8,6 +8,7 @@ alias du='du -h'      # Human-readable sizes
 alias free='free -m'  # Show sizes in MB
 alias dict='sdcv'     # Look up words
 alias pvpn='sudo ~/.pyenv/versions/3.9.1/bin/protonvpn'
+alias vim='nvim'
 
 ## --------------------------------------------------------------
 ## System Dependent Aliases and Functions
