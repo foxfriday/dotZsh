@@ -10,4 +10,3 @@ case "$OSTYPE" in
 	FZFPATH=/usr/local/opt/fzf/shell
         ;;
 esac
-

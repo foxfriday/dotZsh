@@ -2,7 +2,7 @@
 ## Path
 ## --------------------------------------------------------------
 typeset -U PATH path fpath  # Discard multiple entries
-path+=$HOME/.local/bin
+export PATH="$HOME/.local/bin:$PATH"
 ## --------------------------------------------------------------
 ## Defaults
 ## --------------------------------------------------------------
@@ -33,8 +33,8 @@ setopt histignorealldups   # If a command is a duplicate, remove the older one
 ## --------------------------------------------------------------
 ## Vimify zsh
 ## --------------------------------------------------------------
-export EDITOR=/usr/bin/vim
-export VISUAL=/usr/bin/vim
+export EDITOR=nvim
+export VISUAL=nvim
 bindkey '^[[3~' delete-char     # Delete key
 bindkey '^[[C'  forward-char    # Right key
 bindkey '^[[D'  backward-char   # Left key
@@ -54,7 +54,7 @@ bindkey -M vicmd v edit-command-line
 # 6 -> solid vertical bar
 echo -ne '\e[6 q'
 function zle-keymap-select () {
-    if [[ ${KEYMAP} == vicmd ]]; then # ||
+    if [ ${KEYMAP} == vicmd ]; then # ||
       echo -ne '\e[1 q'
 else
       echo -ne '\e[6 q'
@@ -77,8 +77,9 @@ fi
 ## --------------------------------------------------------------
 ## Pyenv
 ## --------------------------------------------------------------
-export PYENV_ROOT=$HOME/.pyenv
-export PATH=$PYENV_ROOT/bin:$PATH
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init --path)"
 if command -v pyenv 1>/dev/null 2>&1; then
     # disable prompt mangling when activating an environment
     export VIRTUAL_ENV_DISABLE_PROMPT=1
@@ -87,7 +88,7 @@ if command -v pyenv 1>/dev/null 2>&1; then
     # Re evaluate prompt function
     setopt PROMPT_SUBST
     print_prompt () {
-        if [[ -v VIRTUAL_ENV ]]; then
+        if [ -v VIRTUAL_ENV ]; then
             echo "%F{magenta}($(basename $VIRTUAL_ENV))%f%F{green}%~%f${NEWLINE}%(?.%F{blue}>%f.%F{red}>%f)"
         else
             echo "%F{green}%~%f${NEWLINE}%(?.%F{blue}>%f.%F{red}>%f)"
@@ -106,7 +107,7 @@ if type brew &>/dev/null; then
         # see: https://github.com/pyenv/pyenv/issues/106
         alias brew='env PATH="${PATH//$(pyenv root)\/shims:/}" brew'
     fi
-    # Assumes you bzip2, zlib, and openblas installed, all required by Python
+    # Assumes bzip2, zlib, and openblas installed, all required by Python
     export LDFLAGS="-L/usr/local/opt/bzip2/lib -L/usr/local/opt/zlib/lib -L/usr/local/opt/openblas/lib -L/usr/local/opt/llvm/lib"
     export CPPFLAGS="-I/usr/local/opt/bzip2/include -I/usr/local/opt/zlib/include -I/usr/local/opt/openblas/include -I/usr/local/opt/llvm/include"
     export PKG_CONFIG_PATH="/usr/local/opt/openblas/lib/pkgconfig"
