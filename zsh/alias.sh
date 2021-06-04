@@ -15,6 +15,7 @@ alias vim='nvim'
 ## --------------------------------------------------------------
 case "$OSTYPE" in
     linux*)
+        export BROWSER="firefox"
         alias open='xdg-open'
         alias pbcopy='xclip -selection clipboard'
         alias pbpaste='xclip -selection clipboard -o'
@@ -24,6 +25,7 @@ case "$OSTYPE" in
         alias ls="ls --color"
         ;;
     darwin*)
+        export BROWSER="/usr/bin/open -a /Applications/Firefox.app"
         alias xdg-open="open -a"
         # modify LSCOLOR if you want different colors with ls
         alias ls="ls -GO"
