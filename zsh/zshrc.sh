@@ -6,6 +6,8 @@ export PATH="$HOME/.local/bin:$PATH"
 ## --------------------------------------------------------------
 ## Defaults
 ## --------------------------------------------------------------
+export EDITOR=nvim
+export VISUAL=nvim
 export LC_ALL=en_US.UTF-8  # Language and locale
 export CLICOLOR=1          # Color
 setopt numericglobsort     # Sort filenames numerically when it makes sense
@@ -31,37 +33,11 @@ SAVEHIST=500
 setopt appendhistory       # Immediately append history instead of overwriting
 setopt histignorealldups   # If a command is a duplicate, remove the older one
 ## --------------------------------------------------------------
-## Vimify zsh
+## Edit commands in editor
 ## --------------------------------------------------------------
-export EDITOR=nvim
-export VISUAL=nvim
-bindkey '^[[3~' delete-char     # Delete key
-bindkey '^[[C'  forward-char    # Right key
-bindkey '^[[D'  backward-char   # Left key
-bindkey '^[[Z'  undo            # Shift+tab undo last action
-bindkey -v                      # Vim bindings
-KEYTIMEOUT=1                    # No mode switching delay
-# Allow commands in editor
 autoload -U edit-command-line
 zle -N edit-command-line
-bindkey -M vicmd v edit-command-line
-# Change cursor based on mode
-# 1 -> blinking block
-# 2 -> solid block
-# 3 -> blinking underscore
-# 4 -> solid underscore
-# 5 -> blinking vertical bar
-# 6 -> solid vertical bar
-echo -ne '\e[6 q'
-function zle-keymap-select () {
-    if [ ${KEYMAP} == vicmd ]; then # ||
-      echo -ne '\e[1 q'
-else
-      echo -ne '\e[6 q'
-    fi
-}
-
-zle -N zle-keymap-select
+bindkey '^e' edit-command-line
 ## --------------------------------------------------------------
 ## Prompt
 ## --------------------------------------------------------------
@@ -114,7 +90,7 @@ if type brew &>/dev/null; then
     OPENBLAS="$(brew --prefix openblas)"
 fi
 ## --------------------------------------------------------------
-## fzf
+## fzf C-r searches history, C-t files
 ## --------------------------------------------------------------
 source $FZFPATH/completion.zsh
 source $FZFPATH/key-bindings.zsh
@@ -153,13 +129,6 @@ source $ZDOTDIR/plugs/forgit.plugin.zsh
 source $PLUGINS/zsh-autosuggestions/zsh-autosuggestions.zsh
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
-## --------------------------------------------------------------
-## Search History
-## --------------------------------------------------------------
-source $PLUGINS/zsh-history-substring-search/zsh-history-substring-search.zsh
-# Ubuntu may be '\eOA' and '\eOB'
-bindkey '^[[A' history-substring-search-up
-bindkey '^[[B' history-substring-search-down
 ## --------------------------------------------------------------
 ## Syntax Highlight
 ## --------------------------------------------------------------
