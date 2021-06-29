@@ -7,6 +7,7 @@ alias df='df -h'      # Human-readable sizes
 alias du='du -h'      # Human-readable sizes
 alias free='free -m'  # Show sizes in MB
 alias dict='sdcv'     # Look up words
+alias idate='date +%Y-%m-%dT%H:%M%z'
 alias pvpn='sudo ~/.pyenv/versions/protonvpn/bin/protonvpn'
 alias vim='nvim'
 
